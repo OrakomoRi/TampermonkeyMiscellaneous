@@ -10,6 +10,7 @@
 // @icon			https://github.com/OrakomoRi/TampermonkeyMiscellaneous/blob/main/flaticon-free-svgs/images/logo.svg?raw=true
 
 // @connect			github.com
+// @connect			raw.githubusercontent.com
 
 // @run-at			document-start
 // @grant			GM_xmlhttpRequest
