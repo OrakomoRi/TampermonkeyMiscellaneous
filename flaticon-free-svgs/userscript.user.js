@@ -17,10 +17,11 @@
 // ==/UserScript==
 
 GM_xmlhttpRequest({
-	method: "GET",
-	url: "https://github.com/OrakomoRi/TampermonkeyMiscellaneous/blob/main/flaticon-free-svgs/userscript.user.js?raw=true",
+	method: 'GET',
+	url: 'https://github.com/OrakomoRi/TampermonkeyMiscellaneous/blob/main/flaticon-free-svgs/src/script.min.js?raw=true',
 	nocache: !0,
 	onload: data => {
-		eval(data.responseText)
+		eval(data.responseText);
+		console.log('Free SVGS: enabled');
 	}
 });

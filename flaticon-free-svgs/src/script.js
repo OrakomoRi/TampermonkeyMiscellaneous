@@ -1,6 +1,4 @@
 function init() {
-	console.log('init hack');
-
 	// download page
 	const downloadDivs = document.querySelectorAll('div.download');
 	downloadDivs.forEach(div => {
