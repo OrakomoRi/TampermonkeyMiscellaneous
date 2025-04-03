@@ -1,6 +1,6 @@
 # Free SVGs on Flaticon
 
-Tampermonkey user script that adds buttons to download SVG icons for free on [flaticon.com](https://www.flaticon.com/), even for premium-only icons.  
+[Tampermonkey](https://www.tampermonkey.net/) user script that adds buttons to download SVG icons for free on [flaticon.com](https://www.flaticon.com/), even for premium-only icons.  
 You must be **logged in** for this to work.
 
 Inspired by [JohnDeved's flaticon-svg-hack](https://github.com/JohnDeved/flaticon-svg-hack).
