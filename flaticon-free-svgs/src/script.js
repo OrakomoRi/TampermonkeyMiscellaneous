@@ -115,16 +115,27 @@
 		addDownloadButtons();
 		mutations.forEach(mutation => {
 			mutation.addedNodes.forEach(node => {
-				if (node instanceof HTMLElement && node.matches('.popover-content.show-menu')) {
+				if (node instanceof HTMLElement &&
+					(
+						node.matches('.download-png-svg-list .popover-content.show-menu') ||
+						node.matches('.popover--download .popover-content.show-menu')
+					)
+				) {
 					addPopoverButton(node);
 				}
 			});
 
-			if (mutation.type === 'attributes' && mutation.target instanceof HTMLElement) {
-				const el = mutation.target;
-				if (el.classList.contains('popover-content') && el.classList.contains('show-menu')) {
-					addPopoverButton(el);
-				}
+			if (
+				mutation.type === 'attributes' &&
+				mutation.target instanceof HTMLElement &&
+				mutation.target.classList.contains('popover-content') &&
+				mutation.target.classList.contains('show-menu') &&
+				(
+					mutation.target.closest('.download-png-svg-list') ||
+					mutation.target.closest('.popover--download')
+				)
+			) {
+				addPopoverButton(mutation.target);
 			}
 		});
 	});

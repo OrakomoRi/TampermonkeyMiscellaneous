@@ -2,7 +2,7 @@
 
 // @name			Free SVGs on Flaticon
 // @namespace		Flaticon
-// @version			1.1.0
+// @version			1.1.1
 // @description		Adds a button to download an icon in SVG for free
 // @author			OrakomoRi
 
