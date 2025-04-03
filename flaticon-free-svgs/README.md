@@ -15,6 +15,6 @@ Inspired by [JohnDeved's flaticon-svg-hack](https://github.com/JohnDeved/flatico
 ## :bulb: Getting Started
 
 1. Install [Tampermonkey](https://www.tampermonkey.net/) extension if you haven't already.
-2. Install the script from [this link](https://github.com/OrakomoRi/TampermonkeyMiscellaneous/blob/main/flaticon-free-svgs/userscript.user.js?raw=true).
+2. Install the script from [this link](https://github.com/OrakomoRi/TampermonkeyMiscellaneous/raw/refs/heads/main/flaticon-free-svgs/userscript.user.js).
 
 > Make sure you are logged in to Flaticon. The download won't work otherwise.
