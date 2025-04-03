@@ -17,5 +17,5 @@ When you select a folder like “Work”, “Friends”, or “Saved Messages”
 ## :bulb: Getting Started
 
 1. Make sure you have [Tampermonkey](https://www.tampermonkey.net/) installed in your browser.
-2. [Click here to install the script](https://github.com/OrakomoRi/TampermonkeyMiscellaneous/raw/refs/heads/main/telegram-web-remember-active-tab/userscript.user.js)
+2. Install the script from [this link](https://github.com/OrakomoRi/TampermonkeyMiscellaneous/raw/refs/heads/main/telegram-web-remember-active-tab/userscript.user.js)
 3. Reload [Telegram Web](https://web.telegram.org/k/) and select any folder tab. The script takes care of the rest!
