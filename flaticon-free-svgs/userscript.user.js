@@ -6,8 +6,9 @@
 // @description		Adds a button to download an icon in SVG for free
 // @author			OrakomoRi
 
-// @match			https://*.flaticon.com/*
 // @icon			https://github.com/OrakomoRi/TampermonkeyMiscellaneous/blob/main/flaticon-free-svgs/images/icon.svg?raw=true
+
+// @match			https://*.flaticon.com/*
 
 // @connect			github.com
 // @connect			raw.githubusercontent.com
