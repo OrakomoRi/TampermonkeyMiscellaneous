@@ -2,7 +2,7 @@
 
 // @name			Remember Active Tab
 // @namespace		TelegramWeb
-// @version			1.1.0
+// @version			1.1.1
 // @description		Saves the active tab index and restores it on page reload
 // @author			OrakomoRi
 
@@ -23,14 +23,8 @@
 	// Key used to store the active tab index in Tampermonkey storage
 	const ACTIVE_TAB_INDEX_KEY = 'activeTabIndex';
 
-	// Used to detect when tab loading is stable (no new tabs appearing)
-	let lastTabCount = 0;
-	let stableCounter = 0;
-	let hasRestored = false;
-
 	// Arrays to hold references to tab buttons and corresponding content containers
 	let tabButtons = [];
-	let containerDivs = [];
 
 	// Main logic to find tabs and apply click handlers
 	function initScript() {
@@ -44,12 +38,11 @@
 			return;
 		}
 
-		// Select all tab buttons (divs) and content areas (divs)
+		// Get all tab buttons
 		tabButtons = Array.from(tabsContainer.querySelectorAll(':scope > div'));
-		containerDivs = Array.from(contentContainer.querySelectorAll(':scope > div'));
 
-		if (!tabButtons.length || !containerDivs.length) {
-			console.warn('No child div elements found inside #folders-tabs or #folders-container.');
+		if (!tabButtons.length) {
+			console.warn('No child div elements found inside #folders-tabs.');
 			return;
 		}
 
@@ -64,46 +57,41 @@
 			}
 		});
 
-		// Check for stability of tab list to restore only once
-		if (!hasRestored) {
-			if (tabButtons.length === lastTabCount) {
-				stableCounter++;
+		// Restore the previously active tab
+		restoreActiveTab();
+	}
+
+	// Wait for tabs to be fully loaded and stable before initializing
+	function waitForStableTabs(callback) {
+		let lastCount = 0;
+		let stableTicks = 0;
+		const maxStableTicks = 2;
+		const interval = setInterval(() => {
+			const currentTabs = document.querySelectorAll('#folders-tabs > div');
+			if (currentTabs.length === lastCount) {
+				stableTicks++;
 			} else {
-				stableCounter = 0;
-				lastTabCount = tabButtons.length;
+				stableTicks = 0;
+				lastCount = currentTabs.length;
 			}
 
-			// When tab count is stable over 3 checks, restore saved tab
-			if (stableCounter >= 3) {
-				restoreActiveTab();
-				hasRestored = true;
+			// When the number of tabs remains the same for N checks, initialize
+			if (stableTicks >= maxStableTicks) {
+				clearInterval(interval);
+				callback();
 			}
-		}
+		}, 5); // Check every 5ms
 	}
 
 	// Restore previously saved active tab index and simulate click on it
 	function restoreActiveTab() {
 		let savedIndex = GM_getValue(ACTIVE_TAB_INDEX_KEY, 0);
-
-		// Ensure index is valid
-		if (savedIndex >= tabButtons.length) {
-			savedIndex = 0;
-		}
-
+		if (savedIndex >= tabButtons.length) savedIndex = 0;
 		activateTab(savedIndex);
 	}
 
 	// Add active class to tab and content divs and simulate click on Telegram tab
 	function activateTab(index) {
-		for (const [i, button] of tabButtons.entries()) {
-			button.classList.toggle('active', i === index);
-		}
-
-		for (const [i, div] of containerDivs.entries()) {
-			div.classList.toggle('active', i === index);
-		}
-
-		// Important: simulate real Telegram tab click
 		if (tabButtons[index]) {
 			tabButtons[index].click();
 			console.log(`Activated and clicked tab: ${index}`);
@@ -117,12 +105,7 @@
 
 	// Returns index of the currently active tab
 	function getActiveTabIndex() {
-		for (let i = 0; i < tabButtons.length; i++) {
-			if (tabButtons[i].classList.contains('active')) {
-				return i;
-			}
-		}
-		return 0;
+		return tabButtons.findIndex(btn => btn.classList.contains('active')) || 0;
 	}
 
 	// Observe DOM changes to catch dynamically added tabs and content
@@ -130,7 +113,8 @@
 		const tabsReady = document.querySelector('#folders-tabs > div');
 		const containersReady = document.querySelector('#folders-container > div');
 		if (tabsReady && containersReady) {
-			initScript();
+			observer.disconnect(); // Stop observing once elements are found
+			waitForStableTabs(initScript);
 		}
 	});
 
